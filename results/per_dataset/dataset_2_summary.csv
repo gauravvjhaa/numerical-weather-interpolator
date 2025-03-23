@@ -1,0 +1,56 @@
+Parameter,Method,RMSE
+Benzene (µg/m³),Lagrange,1.7334314429806275
+Benzene (µg/m³),Newton,1.7334314429806283
+Benzene (µg/m³),Linear Spline,2.0989495411384262
+Benzene (µg/m³),Cubic Spline,1.7525612862541515
+Benzene (µg/m³),Polynomial,2.7729167562222226
+CO (mg/m³),Lagrange,0.24992196759360838
+CO (mg/m³),Newton,0.24992196759360838
+CO (mg/m³),Linear Spline,0.2139549581989888
+CO (mg/m³),Cubic Spline,0.22768480243461658
+CO (mg/m³),Polynomial,0.2888239335710821
+NH3 (µg/m³),Lagrange,8.646401155688375
+NH3 (µg/m³),Newton,8.646401155688379
+NH3 (µg/m³),Linear Spline,6.638323023704845
+NH3 (µg/m³),Cubic Spline,7.522253873117405
+NH3 (µg/m³),Polynomial,11.783648165176599
+NO (µg/m³),Lagrange,11.517817702258435
+NO (µg/m³),Newton,11.517817702258435
+NO (µg/m³),Linear Spline,10.270236159226503
+NO (µg/m³),Cubic Spline,10.77479034332923
+NO (µg/m³),Polynomial,12.725102870277633
+NO2 (µg/m³),Lagrange,12.127179592433244
+NO2 (µg/m³),Newton,12.127179592433244
+NO2 (µg/m³),Linear Spline,7.6476498280661565
+NO2 (µg/m³),Cubic Spline,8.56729166061095
+NO2 (µg/m³),Polynomial,15.360978804450912
+NOx (ppb),Lagrange,20.488138611598686
+NOx (ppb),Newton,20.488138611598693
+NOx (ppb),Linear Spline,15.489426201191108
+NOx (ppb),Cubic Spline,16.854443801413
+NOx (ppb),Polynomial,23.93791897632245
+Ozone (µg/m³),Lagrange,9.018950054833267
+Ozone (µg/m³),Newton,9.018950054833262
+Ozone (µg/m³),Linear Spline,5.665012486755505
+Ozone (µg/m³),Cubic Spline,7.1702905383589775
+Ozone (µg/m³),Polynomial,12.343167584964451
+PM10 (µg/m³),Lagrange,27.702916197412044
+PM10 (µg/m³),Newton,27.702916197412044
+PM10 (µg/m³),Linear Spline,13.555139472918315
+PM10 (µg/m³),Cubic Spline,18.890586544948942
+PM10 (µg/m³),Polynomial,29.04387616574755
+PM2.5 (µg/m³),Lagrange,10.68892464275589
+PM2.5 (µg/m³),Newton,10.688924642755888
+PM2.5 (µg/m³),Linear Spline,6.202395270226059
+PM2.5 (µg/m³),Cubic Spline,8.244057891842912
+PM2.5 (µg/m³),Polynomial,15.039135574920568
+SO2 (µg/m³),Lagrange,3.8976684488912716
+SO2 (µg/m³),Newton,3.8976684488912716
+SO2 (µg/m³),Linear Spline,2.111941349651504
+SO2 (µg/m³),Cubic Spline,3.125418963349265
+SO2 (µg/m³),Polynomial,2.556415744450834
+TOT-RF (mm),Lagrange,0.29460702911207143
+TOT-RF (mm),Newton,0.2946070291120714
+TOT-RF (mm),Linear Spline,0.21935446042956325
+TOT-RF (mm),Cubic Spline,0.25510106887678513
+TOT-RF (mm),Polynomial,0.07200837405804304

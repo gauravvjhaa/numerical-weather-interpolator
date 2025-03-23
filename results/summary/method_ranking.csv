@@ -1,0 +1,58 @@
+Dataset,Parameter,Best Method,RMSE
+dataset_1,TOT-RF (mm),Linear Spline,0.04021262090937662
+dataset_2,Benzene (µg/m³),Lagrange,1.7334314429806275
+dataset_2,CO (mg/m³),Linear Spline,0.2139549581989888
+dataset_2,NH3 (µg/m³),Linear Spline,6.638323023704845
+dataset_2,NO (µg/m³),Linear Spline,10.270236159226503
+dataset_2,NO2 (µg/m³),Linear Spline,7.6476498280661565
+dataset_2,NOx (ppb),Linear Spline,15.489426201191108
+dataset_2,Ozone (µg/m³),Linear Spline,5.665012486755505
+dataset_2,PM10 (µg/m³),Linear Spline,13.555139472918315
+dataset_2,PM2.5 (µg/m³),Linear Spline,6.202395270226059
+dataset_2,SO2 (µg/m³),Linear Spline,2.111941349651504
+dataset_2,TOT-RF (mm),Polynomial,0.07200837405804304
+dataset_3,Benzene (µg/m³),Polynomial,0.6635760344188266
+dataset_3,CO (mg/m³),Linear Spline,0.261385748614082
+dataset_3,PM10 (µg/m³),Linear Spline,46.784430011223776
+dataset_3,SO2 (µg/m³),Linear Spline,3.6936725823486123
+dataset_3,TOT-RF (mm),Polynomial,0.11812288150216639
+dataset_3,Toluene (µg/m³),Linear Spline,1.8442203130912507
+dataset_3,Xylene (µg/m³),Linear Spline,1.7089312942837624
+dataset_4,TOT-RF (mm),Lagrange,0.0
+dataset_5,AT (°C),Lagrange,0.8542951025598801
+dataset_5,CO (mg/m³),Polynomial,0.3487569288135804
+dataset_5,NH3 (µg/m³),Linear Spline,1.670527396246226
+dataset_5,NO (µg/m³),Cubic Spline,7.290090875884207
+dataset_5,NO2 (µg/m³),Cubic Spline,4.657937570217823
+dataset_5,NOx (ppb),Cubic Spline,7.414884717567393
+dataset_5,Ozone (µg/m³),Linear Spline,3.678585995103505
+dataset_5,PM10 (µg/m³),Polynomial,21.277275969043867
+dataset_5,PM2.5 (µg/m³),Linear Spline,9.894128749742194
+dataset_5,RF (mm),Linear Spline,0.059642934983840205
+dataset_5,RH (%),Cubic Spline,3.4807034050852965
+dataset_5,SO2 (µg/m³),Polynomial,2.9787171704814623
+dataset_5,SR (W/mt2),Linear Spline,18.949431263516278
+dataset_5,TOT-RF (mm),Linear Spline,0.059642934983840205
+dataset_5,WD (deg),Linear Spline,19.278331504905367
+dataset_5,WS (m/s),Linear Spline,0.1899563874124109
+dataset_6,Benzene (µg/m³),Polynomial,0.12644920147392982
+dataset_6,CO (mg/m³),Linear Spline,0.27501428036763886
+dataset_6,MP-Xylene (µg/m³),Linear Spline,2.4118537289731496
+dataset_6,NH3 (µg/m³),Polynomial,1.6662236052791075
+dataset_6,NO (µg/m³),Polynomial,0.39265393215926386
+dataset_6,NO2 (µg/m³),Linear Spline,1.5593628967235817
+dataset_6,NOx (ppb),Polynomial,0.8621192385553593
+dataset_6,Ozone (µg/m³),Linear Spline,0.5585664292979824
+dataset_6,PM10 (µg/m³),Polynomial,51.227190734398604
+dataset_6,PM2.5 (µg/m³),Linear Spline,36.30366855532252
+dataset_6,RF (mm),Polynomial,0.153301465836019
+dataset_6,SR (W/mt2),Linear Spline,28.51604828124935
+dataset_6,TOT-RF (mm),Polynomial,0.11213838522549374
+dataset_6,Toluene (µg/m³),Linear Spline,0.49478429062862705
+dataset_6,WD (deg),Cubic Spline,27.44274175983749
+dataset_6,WS (m/s),Linear Spline,0.20482564307552575
+dataset_9,TOT-RF (mm),Polynomial,0.1427687402582398
+dataset_10,TOT-RF (mm),Polynomial,0.0856100137022187
+dataset_11,TOT-RF (mm),Polynomial,0.003899137864188097
+dataset_12,TOT-RF (mm),Polynomial,0.058432476527193286
+dataset_13,TOT-RF (mm),Cubic Spline,0.08744895778685582

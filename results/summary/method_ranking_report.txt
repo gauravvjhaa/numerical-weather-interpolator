@@ -1,0 +1,84 @@
+# INTERPOLATION METHOD RANKING REPORT #
+
+## OVERALL BEST METHODS ##
+1. Linear Spline: 31 occurrences (54.4%)
+2. Polynomial: 17 occurrences (29.8%)
+3. Cubic Spline: 6 occurrences (10.5%)
+4. Lagrange: 3 occurrences (5.3%)
+
+## BEST METHOD BY PARAMETER ##
+
+AT (°C):
+  - Lagrange: 1 datasets
+
+Benzene (µg/m³):
+  - Polynomial: 2 datasets
+  - Lagrange: 1 datasets
+
+CO (mg/m³):
+  - Linear Spline: 3 datasets
+  - Polynomial: 1 datasets
+
+MP-Xylene (µg/m³):
+  - Linear Spline: 1 datasets
+
+NH3 (µg/m³):
+  - Linear Spline: 2 datasets
+  - Polynomial: 1 datasets
+
+NO (µg/m³):
+  - Cubic Spline: 1 datasets
+  - Linear Spline: 1 datasets
+  - Polynomial: 1 datasets
+
+NO2 (µg/m³):
+  - Linear Spline: 2 datasets
+  - Cubic Spline: 1 datasets
+
+NOx (ppb):
+  - Cubic Spline: 1 datasets
+  - Linear Spline: 1 datasets
+  - Polynomial: 1 datasets
+
+Ozone (µg/m³):
+  - Linear Spline: 3 datasets
+
+PM10 (µg/m³):
+  - Polynomial: 2 datasets
+  - Linear Spline: 2 datasets
+
+PM2.5 (µg/m³):
+  - Linear Spline: 3 datasets
+
+RF (mm):
+  - Polynomial: 1 datasets
+  - Linear Spline: 1 datasets
+
+RH (%):
+  - Cubic Spline: 1 datasets
+
+SO2 (µg/m³):
+  - Linear Spline: 2 datasets
+  - Polynomial: 1 datasets
+
+SR (W/mt2):
+  - Linear Spline: 2 datasets
+
+TOT-RF (mm):
+  - Polynomial: 7 datasets
+  - Linear Spline: 2 datasets
+  - Lagrange: 1 datasets
+  - Cubic Spline: 1 datasets
+
+Toluene (µg/m³):
+  - Linear Spline: 2 datasets
+
+WD (deg):
+  - Cubic Spline: 1 datasets
+  - Linear Spline: 1 datasets
+
+WS (m/s):
+  - Linear Spline: 2 datasets
+
+Xylene (µg/m³):
+  - Linear Spline: 1 datasets

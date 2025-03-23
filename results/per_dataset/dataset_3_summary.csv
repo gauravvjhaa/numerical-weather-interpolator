@@ -1,0 +1,36 @@
+Parameter,Method,RMSE
+Benzene (µg/m³),Lagrange,1.2996168178624001
+Benzene (µg/m³),Newton,1.2996168178624004
+Benzene (µg/m³),Linear Spline,0.7406218910082345
+Benzene (µg/m³),Cubic Spline,1.0202741745454884
+Benzene (µg/m³),Polynomial,0.6635760344188266
+CO (mg/m³),Lagrange,0.447445051827018
+CO (mg/m³),Newton,0.4474450518270181
+CO (mg/m³),Linear Spline,0.261385748614082
+CO (mg/m³),Cubic Spline,0.3590212940890142
+CO (mg/m³),Polynomial,0.2680719376211193
+PM10 (µg/m³),Lagrange,67.8782925267237
+PM10 (µg/m³),Newton,67.8782925267237
+PM10 (µg/m³),Linear Spline,46.784430011223776
+PM10 (µg/m³),Cubic Spline,51.62762832390907
+PM10 (µg/m³),Polynomial,79.65335032209772
+SO2 (µg/m³),Lagrange,7.440628503000099
+SO2 (µg/m³),Newton,7.440628503000098
+SO2 (µg/m³),Linear Spline,3.6936725823486123
+SO2 (µg/m³),Cubic Spline,4.4520349376061255
+SO2 (µg/m³),Polynomial,4.569870931813711
+TOT-RF (mm),Lagrange,0.2978930527306209
+TOT-RF (mm),Newton,0.29789305273062094
+TOT-RF (mm),Linear Spline,0.1410918018586627
+TOT-RF (mm),Cubic Spline,0.1708717245910474
+TOT-RF (mm),Polynomial,0.11812288150216639
+Toluene (µg/m³),Lagrange,3.32862937689555
+Toluene (µg/m³),Newton,3.328629376895549
+Toluene (µg/m³),Linear Spline,1.8442203130912507
+Toluene (µg/m³),Cubic Spline,1.9476172354154662
+Toluene (µg/m³),Polynomial,2.560561172031574
+Xylene (µg/m³),Lagrange,2.9031294115848536
+Xylene (µg/m³),Newton,2.903129411584854
+Xylene (µg/m³),Linear Spline,1.7089312942837624
+Xylene (µg/m³),Cubic Spline,2.3047091286935735
+Xylene (µg/m³),Polynomial,1.785542545410219

@@ -1,0 +1,21 @@
+Dataset,Method,RMSE
+dataset_2,Lagrange,27.702916197412044
+dataset_2,Newton,27.702916197412044
+dataset_2,Linear Spline,13.555139472918315
+dataset_2,Cubic Spline,18.890586544948942
+dataset_2,Polynomial,29.04387616574755
+dataset_3,Lagrange,67.8782925267237
+dataset_3,Newton,67.8782925267237
+dataset_3,Linear Spline,46.784430011223776
+dataset_3,Cubic Spline,51.62762832390907
+dataset_3,Polynomial,79.65335032209772
+dataset_5,Lagrange,24.572447636438117
+dataset_5,Newton,24.572447636438124
+dataset_5,Linear Spline,21.44002085476769
+dataset_5,Cubic Spline,23.181887024388242
+dataset_5,Polynomial,21.277275969043867
+dataset_6,Lagrange,95.39755681542026
+dataset_6,Newton,95.39755681542024
+dataset_6,Linear Spline,58.665913864194366
+dataset_6,Cubic Spline,72.68749024736978
+dataset_6,Polynomial,51.227190734398604

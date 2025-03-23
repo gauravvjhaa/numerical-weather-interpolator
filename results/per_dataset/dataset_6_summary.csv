@@ -1,0 +1,81 @@
+Parameter,Method,RMSE
+Benzene (µg/m³),Lagrange,1.2939833897934996
+Benzene (µg/m³),Newton,1.2939833897934996
+Benzene (µg/m³),Linear Spline,0.14054832413666324
+Benzene (µg/m³),Cubic Spline,0.37844794606589327
+Benzene (µg/m³),Polynomial,0.12644920147392982
+CO (mg/m³),Lagrange,0.3887608374618014
+CO (mg/m³),Newton,0.3887608374618014
+CO (mg/m³),Linear Spline,0.27501428036763886
+CO (mg/m³),Cubic Spline,0.2861097414431365
+CO (mg/m³),Polynomial,0.3594674181701698
+MP-Xylene (µg/m³),Lagrange,3.339498538882083
+MP-Xylene (µg/m³),Newton,3.3394985388820846
+MP-Xylene (µg/m³),Linear Spline,2.4118537289731496
+MP-Xylene (µg/m³),Cubic Spline,2.8258700975000566
+MP-Xylene (µg/m³),Polynomial,4.43199604181034
+NH3 (µg/m³),Lagrange,5.571180811729749
+NH3 (µg/m³),Newton,5.571180811729748
+NH3 (µg/m³),Linear Spline,2.182395165638851
+NH3 (µg/m³),Cubic Spline,3.4941979778709644
+NH3 (µg/m³),Polynomial,1.6662236052791075
+NO (µg/m³),Lagrange,0.9524108776340152
+NO (µg/m³),Newton,0.9524108776340157
+NO (µg/m³),Linear Spline,0.4432784513605564
+NO (µg/m³),Cubic Spline,0.7095713459984709
+NO (µg/m³),Polynomial,0.39265393215926386
+NO2 (µg/m³),Lagrange,3.6612260890800234
+NO2 (µg/m³),Newton,3.6612260890800252
+NO2 (µg/m³),Linear Spline,1.5593628967235817
+NO2 (µg/m³),Cubic Spline,2.422473313050012
+NO2 (µg/m³),Polynomial,3.4081304526073493
+NOx (ppb),Lagrange,8.494079216157155
+NOx (ppb),Newton,8.494079216157157
+NOx (ppb),Linear Spline,1.1881414782818556
+NOx (ppb),Cubic Spline,2.9479479014914642
+NOx (ppb),Polynomial,0.8621192385553593
+Ozone (µg/m³),Lagrange,2.4801389158600937
+Ozone (µg/m³),Newton,2.480138915860099
+Ozone (µg/m³),Linear Spline,0.5585664292979824
+Ozone (µg/m³),Cubic Spline,1.0102226056584367
+Ozone (µg/m³),Polynomial,4.783047585022401
+PM10 (µg/m³),Lagrange,95.39755681542026
+PM10 (µg/m³),Newton,95.39755681542024
+PM10 (µg/m³),Linear Spline,58.665913864194366
+PM10 (µg/m³),Cubic Spline,72.68749024736978
+PM10 (µg/m³),Polynomial,51.227190734398604
+PM2.5 (µg/m³),Lagrange,48.87466790509502
+PM2.5 (µg/m³),Newton,48.87466790509502
+PM2.5 (µg/m³),Linear Spline,36.30366855532252
+PM2.5 (µg/m³),Cubic Spline,44.961813095798696
+PM2.5 (µg/m³),Polynomial,39.61352458217689
+RF (mm),Lagrange,0.5788329526867918
+RF (mm),Newton,0.5788329526867918
+RF (mm),Linear Spline,0.3288348757034862
+RF (mm),Cubic Spline,0.4485393572286647
+RF (mm),Polynomial,0.153301465836019
+SR (W/mt2),Lagrange,56.087566942770195
+SR (W/mt2),Newton,56.087566942770195
+SR (W/mt2),Linear Spline,28.51604828124935
+SR (W/mt2),Cubic Spline,37.941499736740006
+SR (W/mt2),Polynomial,31.574724109950985
+TOT-RF (mm),Lagrange,0.4694038769282692
+TOT-RF (mm),Newton,0.4694038769282692
+TOT-RF (mm),Linear Spline,0.2603786294059883
+TOT-RF (mm),Cubic Spline,0.3564273771327119
+TOT-RF (mm),Polynomial,0.11213838522549374
+Toluene (µg/m³),Lagrange,1.7504379901671747
+Toluene (µg/m³),Newton,1.750437990167175
+Toluene (µg/m³),Linear Spline,0.49478429062862705
+Toluene (µg/m³),Cubic Spline,0.8008778389862387
+Toluene (µg/m³),Polynomial,1.6108056680984546
+WD (deg),Lagrange,59.5880552857588
+WD (deg),Newton,59.58805528575879
+WD (deg),Linear Spline,27.499973073828674
+WD (deg),Cubic Spline,27.44274175983749
+WD (deg),Polynomial,34.134681136316594
+WS (m/s),Lagrange,0.3017481203545951
+WS (m/s),Newton,0.30174812035459503
+WS (m/s),Linear Spline,0.20482564307552575
+WS (m/s),Cubic Spline,0.21439027213504366
+WS (m/s),Polynomial,0.21961837435241877

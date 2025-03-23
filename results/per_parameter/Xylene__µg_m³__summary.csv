@@ -1,0 +1,6 @@
+Dataset,Method,RMSE
+dataset_3,Lagrange,2.9031294115848536
+dataset_3,Newton,2.903129411584854
+dataset_3,Linear Spline,1.7089312942837624
+dataset_3,Cubic Spline,2.3047091286935735
+dataset_3,Polynomial,1.785542545410219

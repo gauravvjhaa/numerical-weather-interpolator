@@ -1,0 +1,6 @@
+Parameter,Method,RMSE
+TOT-RF (mm),Lagrange,0.0
+TOT-RF (mm),Newton,0.0
+TOT-RF (mm),Linear Spline,0.0
+TOT-RF (mm),Cubic Spline,0.0
+TOT-RF (mm),Polynomial,0.0
