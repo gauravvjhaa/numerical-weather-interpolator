@@ -1,6 +1,3 @@
-Here's your README.md file in GitHub code format:
-
-```markdown
 # Numerical Weather Interpolator
 
 A comprehensive project for evaluating interpolation methods for missing weather data.
@@ -171,4 +168,3 @@ Remember that the best approach is to check the specific analysis for your data 
 
 *Documentation created by [@gauravvjhaa](https://github.com/gauravvjhaa)*  
 *Last updated: 2025-03-23*
-```
