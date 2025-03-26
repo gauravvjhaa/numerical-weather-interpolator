@@ -2,8 +2,9 @@
 Inference script for filling missing values in weather datasets
 using various interpolation methods.
 
-This script takes datasets from testdata/input/, applies interpolation methods
-to fill missing values, and saves the results to testdata/output/.
+This script takes datasets from testdata/input/, creates an altered version
+by removing 10-15% of the values, applies interpolation methods to fill the
+missing values, and saves the results to testdata/output/.
 """
 import os
 import numpy as np
@@ -113,6 +114,35 @@ def apply_interpolation(df, method_func, parameter):
         print(f"Error applying interpolation: {e}")
         return df  # Return original if interpolation fails
 
+def alter_dataset(df, percentage=10):
+    """
+    Alter a dataset by removing a percentage of values from all columns.
+    
+    Args:
+        df: Input DataFrame
+        percentage: Percentage of values to remove (default: 10%)
+        
+    Returns:
+        DataFrame with values removed and the indices of removed values
+    """
+    df_altered = df.copy()
+    total_values = df.size
+    n_remove = int(total_values * percentage / 100)
+    
+    # Ensure n_remove does not exceed the number of rows
+    n_remove = min(n_remove, df.shape[0])
+    
+    # Generate random indices to remove
+    np.random.seed(42)
+    removed_indices = np.random.choice(df.index, size=n_remove, replace=False)
+    
+    # Set the values to NaN in the altered dataset
+    for idx in removed_indices:
+        col = np.random.choice(df.columns)
+        df_altered.loc[idx, col] = np.nan
+    
+    return df_altered, removed_indices
+
 def interpolate_dataset(input_file, output_dir):
     """
     Interpolate a single dataset file using all methods.
@@ -131,39 +161,59 @@ def interpolate_dataset(input_file, output_dir):
         print(f"Error loading file {input_file}: {e}")
         return
     
-    # Get filename without path and extension
+    # Alter the dataset by removing 10-15% of the values
+    altered_percentage = np.random.uniform(10, 15)
+    df_altered, removed_indices = alter_dataset(df, percentage=altered_percentage)
+    
+    # Save the altered dataset
     base_filename = os.path.basename(input_file)
     filename_no_ext = os.path.splitext(base_filename)[0]
+    altered_filename = f"altered_{filename_no_ext}.csv"
+    altered_path = os.path.join(output_dir, altered_filename)
+    df_altered.to_csv(altered_path, index=False)
+    print(f"Saved altered dataset to {altered_path}")
     
     # Detect missing values
-    missing_values = detect_missing_values(df)
+    missing_values = detect_missing_values(df_altered)
     
     if not missing_values:
-        print("No missing values found in the dataset")
+        print("No missing values found in the altered dataset")
         return
     
     print(f"Found missing values in {len(missing_values)} columns:")
     for col, count in missing_values.items():
         print(f"  - {col}: {count} missing values")
     
+    # Dictionary to store predictions and errors
+    predictions = {method_name: [] for method_name in METHODS.keys()}
+    errors = {method_name: [] for method_name in METHODS.keys()}
+    
     # Apply each interpolation method
     for method_name, method_func in METHODS.items():
         print(f"\nApplying {method_name} interpolation...")
         
         # Create a copy of the original dataframe
-        df_interpolated = df.copy()
+        df_interpolated = df_altered.copy()
         
         # Apply interpolation to each column with missing values
         for parameter in missing_values.keys():
             print(f"  Interpolating {parameter}...")
             
             # Skip non-numeric columns
-            if not pd.api.types.is_numeric_dtype(df[parameter]):
+            if not pd.api.types.is_numeric_dtype(df_altered[parameter]):
                 print(f"  Skipping non-numeric column: {parameter}")
                 continue
             
             # Apply interpolation for this parameter
             df_interpolated = apply_interpolation(df_interpolated, method_func, parameter)
+            
+            # Store predictions and errors
+            missing_indices = df_altered.index[df_altered[parameter].isna()].tolist()
+            for idx in missing_indices:
+                original_value = df.loc[idx, parameter]
+                predicted_value = df_interpolated.loc[idx, parameter]
+                predictions[method_name].append(predicted_value)
+                errors[method_name].append(np.abs(original_value - predicted_value))
         
         # Check if interpolation filled all values
         remaining_missing = 0
@@ -183,16 +233,41 @@ def interpolate_dataset(input_file, output_dir):
         df_interpolated.to_csv(output_path, index=False)
         print(f"  Saved interpolated dataset to {output_path}")
         
-        # Create a plot visualizing the filled values for the first few columns
-        create_visualization(df, df_interpolated, list(missing_values.keys())[:3], 
+        # Create a plot visualizing the filled values for all columns
+        create_visualization(df, df_altered, df_interpolated, list(missing_values.keys()), 
                             method_name, output_dir, filename_no_ext)
+        
+        # Create a plot focusing on index range 200-250
+        create_detailed_visualization(df, df_altered, df_interpolated, list(missing_values.keys()), 
+                                      method_name, output_dir, filename_no_ext, 200, 250)
+    
+    # Save the summary file
+    summary_data = []
+    for idx in missing_indices:
+        row = {"Index": idx, "Original Value": df.loc[idx, parameter]}
+        for method_name in METHODS.keys():
+            row[f"{method_name} Predicted"] = predictions[method_name][missing_indices.index(idx)]
+            row[f"{method_name} Error"] = errors[method_name][missing_indices.index(idx)]
+        summary_data.append(row)
+    
+    summary_df = pd.DataFrame(summary_data)
+    summary_filename = f"{filename_no_ext}_summary.csv"
+    summary_path = os.path.join(output_dir, summary_filename)
+    summary_df.to_csv(summary_path, index=False)
+    print(f"  Saved summary file to {summary_path}")
+    
+    # Calculate and print average errors
+    avg_errors = {method_name: np.mean(errors[method_name]) for method_name in METHODS.keys()}
+    for method_name, avg_error in avg_errors.items():
+        print(f"Average error for {method_name}: {avg_error}")
 
-def create_visualization(df_original, df_interpolated, parameters, method_name, output_dir, filename_base):
+def create_visualization(df_original, df_altered, df_interpolated, parameters, method_name, output_dir, filename_base):
     """
     Create visualizations of the interpolation results.
     
     Args:
-        df_original: Original DataFrame with missing values
+        df_original: Original DataFrame with complete data
+        df_altered: Altered DataFrame with missing values
         df_interpolated: DataFrame with interpolated values
         parameters: List of parameters that were interpolated
         method_name: Name of the interpolation method
@@ -205,7 +280,7 @@ def create_visualization(df_original, df_interpolated, parameters, method_name, 
     
     for parameter in parameters:
         # Skip non-numeric columns or those without missing values
-        if not pd.api.types.is_numeric_dtype(df_original[parameter]) or not df_original[parameter].isna().any():
+        if not pd.api.types.is_numeric_dtype(df_original[parameter]) or not df_altered[parameter].isna().any():
             continue
         
         plt.figure(figsize=(12, 6))
@@ -215,8 +290,13 @@ def create_visualization(df_original, df_interpolated, parameters, method_name, 
         plt.plot(original_indices, df_original.loc[original_indices, parameter], 
                 'go', label='Original Data Points')
         
+        # Plot deleted data points
+        deleted_indices = df_altered.index[df_altered[parameter].isna()]
+        plt.plot(deleted_indices, df_original.loc[deleted_indices, parameter], 
+                'ro', label='Deleted Data Points')
+        
         # Plot interpolated values (only the points that were originally missing)
-        missing_indices = df_original.index[df_original[parameter].isna()]
+        missing_indices = df_altered.index[df_altered[parameter].isna()]
         plt.plot(missing_indices, df_interpolated.loc[missing_indices, parameter], 
                 'rx', markersize=8, label=f'{method_name} Interpolated Points')
         
@@ -235,6 +315,66 @@ def create_visualization(df_original, df_interpolated, parameters, method_name, 
         safe_param = sanitize_filename(parameter)
         safe_method = sanitize_filename(method_name)
         filename = f"{filename_base}_{safe_param}_{safe_method}.png"
+        plt.savefig(os.path.join(viz_dir, filename))
+        plt.close()
+
+def create_detailed_visualization(df_original, df_altered, df_interpolated, parameters, method_name, output_dir, filename_base, start_idx, end_idx):
+    """
+    Create detailed visualizations of the interpolation results for a specific index range.
+    
+    Args:
+        df_original: Original DataFrame with complete data
+        df_altered: Altered DataFrame with missing values
+        df_interpolated: DataFrame with interpolated values
+        parameters: List of parameters that were interpolated
+        method_name: Name of the interpolation method
+        output_dir: Directory to save the visualizations
+        filename_base: Base filename for the output files
+        start_idx: Start index for the detailed view
+        end_idx: End index for the detailed view
+    """
+    # Ensure visualization directory exists
+    viz_dir = os.path.join(output_dir, 'visualizations')
+    ensure_dir_exists(viz_dir)
+    
+    for parameter in parameters:
+        # Skip non-numeric columns or those without missing values
+        if not pd.api.types.is_numeric_dtype(df_original[parameter]) or not df_altered[parameter].isna().any():
+            continue
+        
+        plt.figure(figsize=(12, 6))
+        
+        # Plot original data (excluding NaN values)
+        original_indices = df_original.index[(~df_original[parameter].isna()) & (df_original.index >= start_idx) & (df_original.index <= end_idx)]
+        plt.plot(original_indices, df_original.loc[original_indices, parameter], 
+                'go', label='Original Data Points')
+        
+        # Plot deleted data points
+        deleted_indices = df_altered.index[(df_altered[parameter].isna()) & (df_altered.index >= start_idx) & (df_altered.index <= end_idx)]
+        plt.plot(deleted_indices, df_original.loc[deleted_indices, parameter], 
+                'ro', label='Deleted Data Points')
+        
+        # Plot interpolated values (only the points that were originally missing)
+        missing_indices = df_altered.index[(df_altered[parameter].isna()) & (df_altered.index >= start_idx) & (df_altered.index <= end_idx)]
+        plt.plot(missing_indices, df_interpolated.loc[missing_indices, parameter], 
+                'rx', markersize=8, label=f'{method_name} Interpolated Points')
+        
+        # Plot the full interpolated series with a line to show the trend
+        detailed_indices = df_interpolated.index[(df_interpolated.index >= start_idx) & (df_interpolated.index <= end_idx)]
+        plt.plot(detailed_indices, df_interpolated.loc[detailed_indices, parameter], 'b-', alpha=0.3, 
+                label='Complete Interpolated Series')
+        
+        plt.title(f'{method_name} Interpolation for {parameter} (Index {start_idx}-{end_idx})')
+        plt.xlabel('Index')
+        plt.ylabel(parameter)
+        plt.legend()
+        plt.grid(True, linestyle='--', alpha=0.6)
+        plt.tight_layout()
+        
+        # Save the visualization
+        safe_param = sanitize_filename(parameter)
+        safe_method = sanitize_filename(method_name)
+        filename = f"{filename_base}_{safe_param}_{safe_method}_detailed_{start_idx}_{end_idx}.png"
         plt.savefig(os.path.join(viz_dir, filename))
         plt.close()
 
