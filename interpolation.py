@@ -1,6 +1,9 @@
 """
 Module implementing various interpolation methods for weather data.
 Optimized for inference on datasets with actual missing values.
+
+Author: Gaurav Jha
+Last updated: 2025-03-27 18:09:23
 """
 import numpy as np
 from scipy import interpolate
@@ -53,20 +56,8 @@ def lagrange_interpolation(df, parameter, indices_to_predict):
             
         return result
     
-    # Predict values at missing indices
-    predictions = []
-    for idx in indices_to_predict:
-        # Using only a subset of points for efficiency and numerical stability
-        # Find nearest 10 points to the prediction point
-        distances = np.abs(x_valid - idx)
-        nearest_indices = np.argsort(distances)[:min(10, len(distances))]
-        
-        x_subset = x_valid[nearest_indices]
-        y_subset = y_valid[nearest_indices]
-        
-        # Calculate prediction using Lagrange polynomial
-        pred = lagrange_polynomial(idx, x_subset, y_subset)
-        predictions.append(pred)
+    # Predict values at missing indices using all valid points
+    predictions = [lagrange_polynomial(idx, x_valid, y_valid) for idx in indices_to_predict]
     
     return np.array(predictions)
 
@@ -91,8 +82,8 @@ def newton_interpolation(df, parameter, indices_to_predict):
         raise ValueError(f"Not enough valid points to perform Newton interpolation for {parameter}")
     
     # Create time or position axis (using index as x-values)
-    x_valid = np.array(valid_indices)
-    y_valid = valid_values
+    x_valid = np.array(valid_indices, dtype=float)
+    y_valid = np.array(valid_values, dtype=float)
     
     # Function to calculate divided differences
     def divided_diff(x, y):
@@ -123,23 +114,11 @@ def newton_interpolation(df, parameter, indices_to_predict):
             
         return p
     
-    # Predict values at missing indices
-    predictions = []
-    for idx in indices_to_predict:
-        # Using only a subset of points for efficiency and numerical stability
-        # Find nearest 10 points to the prediction point
-        distances = np.abs(x_valid - idx)
-        nearest_indices = np.argsort(distances)[:min(10, len(distances))]
-        
-        x_subset = x_valid[nearest_indices]
-        y_subset = y_valid[nearest_indices]
-        
-        # Calculate divided differences
-        coef = divided_diff(x_subset, y_subset)
-        
-        # Calculate prediction using Newton's polynomial
-        pred = newton_polynomial(coef, x_subset, idx)
-        predictions.append(pred)
+    # Calculate divided differences using all valid points
+    coef = divided_diff(x_valid, y_valid)
+    
+    # Predict values at missing indices using all valid points
+    predictions = [newton_polynomial(coef, x_valid, idx) for idx in indices_to_predict]
     
     return np.array(predictions)
 
@@ -164,21 +143,21 @@ def linear_spline(df, parameter, indices_to_predict):
         raise ValueError(f"Not enough valid points to perform linear spline interpolation for {parameter}")
     
     # Create time or position axis (using index as x-values)
-    x_valid = np.array(valid_indices)
-    y_valid = valid_values
+    x_valid = np.array(valid_indices, dtype=float)
+    y_valid = np.array(valid_values, dtype=float)
     
     # Create linear spline interpolation function
     f = interpolate.interp1d(x_valid, y_valid, kind='linear', 
                             bounds_error=False, fill_value='extrapolate')
     
-    # Predict values at missing indices
+    # Predict values at missing indices using all valid points
     predictions = f(indices_to_predict)
     
     return predictions
 
 def cubic_spline(df, parameter, indices_to_predict):
     """
-    Implement cubic spline interpolation to predict missing values.
+    Implement cubic spline interpolation with smoothing to predict missing values.
     
     Args:
         df: DataFrame with missing values
@@ -202,61 +181,27 @@ def cubic_spline(df, parameter, indices_to_predict):
             raise ValueError(f"Not enough valid points to perform cubic spline interpolation for {parameter}")
     
     # Create time or position axis (using index as x-values)
-    x_valid = np.array(valid_indices)
-    y_valid = valid_values
+    x_valid = np.array(valid_indices, dtype=float)
+    y_valid = np.array(valid_values, dtype=float)
     
-    # Create cubic spline interpolation function
     try:
-        f = interpolate.interp1d(x_valid, y_valid, kind='cubic', 
-                                bounds_error=False, fill_value='extrapolate')
+        # Create proper cubic spline with smoothness
+        # Use UnivariateSpline with small smoothing factor to reduce sharpness
+        s = len(x_valid) * 0.01  # Small smoothing factor (0 = exact interpolation)
+        f = interpolate.UnivariateSpline(x_valid, y_valid, k=3, s=s)
         
         # Predict values at missing indices
         predictions = f(indices_to_predict)
         
-    except ValueError:
-        # If cubic spline fails (e.g., duplicate x values), fall back to linear
-        print(f"Warning: Cubic spline failed for {parameter}, falling back to linear")
-        return linear_spline(df, parameter, indices_to_predict)
-    
-    return predictions
-
-def polynomial_interpolation(df, parameter, indices_to_predict, degree=3):
-    """
-    Implement polynomial interpolation to predict missing values.
-    
-    Args:
-        df: DataFrame with missing values
-        parameter: Column name of the parameter to interpolate
-        indices_to_predict: Indices where predictions are needed
-        degree: Degree of the polynomial (default: 3)
-        
-    Returns:
-        numpy array of predicted values
-    """
-    # Get non-NaN indices and values
-    valid_indices = df.index[~df[parameter].isna()].tolist()
-    valid_values = df.loc[valid_indices, parameter].values
-    
-    # If no valid data points, we can't interpolate
-    if len(valid_indices) <= degree:
-        # Fall back to lower degree if possible
-        if len(valid_indices) >= 2:
-            fallback_degree = len(valid_indices) - 1
-            print(f"Warning: Not enough points for degree {degree} polynomial for {parameter}, "
-                  f"falling back to degree {fallback_degree}")
-            return polynomial_interpolation(df, parameter, indices_to_predict, fallback_degree)
-        else:
-            raise ValueError(f"Not enough valid points to perform polynomial interpolation for {parameter}")
-    
-    # Create time or position axis (using index as x-values)
-    x_valid = np.array(valid_indices)
-    y_valid = valid_values
-    
-    # Fit polynomial
-    coeffs = np.polyfit(x_valid, y_valid, degree)
-    p = np.poly1d(coeffs)
-    
-    # Predict values at missing indices
-    predictions = p(indices_to_predict)
+    except Exception as e:
+        print(f"Warning: Advanced cubic spline failed for {parameter}: {e}, falling back to basic spline")
+        try:
+            # Try with regular CubicSpline as fallback
+            f = interpolate.CubicSpline(x_valid, y_valid, bc_type='natural')
+            predictions = f(indices_to_predict)
+        except:
+            # If that fails too, fall back to linear
+            print(f"Warning: Cubic spline failed for {parameter}, falling back to linear")
+            return linear_spline(df, parameter, indices_to_predict)
     
     return predictions
